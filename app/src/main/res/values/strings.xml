@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BakiTheClicker</string>
+    <string name="imgDescMain">This is Baki</string>
+
+    <string name="continueAv">Continue</string>
+    <string name="chooseStage">Choose stage</string>
+    <string name="settings">Settings</string>
+
+    <string name="buttPrev">prev</string>
+    <string name="buttNext">next</string>
+    <string name="buttHome">home</string>
+</resources>
