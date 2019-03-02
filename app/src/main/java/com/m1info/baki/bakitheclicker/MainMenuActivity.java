@@ -23,13 +23,13 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
-        Button btnTest = (Button)findViewById(R.id.buttonInfo);
+        /*Button btnTest = (Button)findViewById(R.id.buttonInfo);
         btn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 startActivity(new Intent(MainMenuActivity.this, TestActivity.class));
             }
-        });
+        });*/
 
     }
 

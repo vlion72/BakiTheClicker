@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/LifePoints"
+        android:id="@+id/lifePoints"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="223dp"
         android:layout_height="29dp"
@@ -21,31 +21,11 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="223dp"
         android:layout_height="29dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LifePoints" />
-
-    <EditText
-        android:id="@+id/topLeftText"
-        android:layout_width="79dp"
-        android:layout_height="59dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toStartOf="@+id/ennemiLP"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <EditText
-        android:id="@+id/topRightText"
-        android:layout_width="78dp"
-        android:layout_height="59dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ennemiLP"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/lifePoints" />
 
     <ImageButton
         android:id="@+id/ennemi"
@@ -58,13 +38,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LifePoints"
+        app:layout_constraintTop_toTopOf="@+id/lifePoints"
         app:srcCompat="@android:color/holo_red_dark" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/inventaire"
         android:layout_width="248dp"
         android:layout_height="76dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Bakimage">
@@ -87,9 +68,59 @@
 
     <ImageView
         android:id="@+id/Bakimage"
-        android:layout_width="133dp"
-        android:layout_height="76dp"
+        android:layout_width="158dp"
+        android:layout_height="82dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/bakimain" />
+
+    <TextView
+        android:id="@+id/myDmgText"
+        android:layout_width="85dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/etageTexte"
+        app:layout_constraintEnd_toStartOf="@+id/lifePoints"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/etageTexte"
+        android:layout_width="86dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="12dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/ennemiLP"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ennemiDmgTexte"
+        android:layout_width="83dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lifePoints"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ennemiNomTexte"
+        android:layout_width="83dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ennemiLP"
+        app:layout_constraintTop_toBottomOf="@+id/ennemiDmgTexte" />
 </android.support.constraint.ConstraintLayout>
