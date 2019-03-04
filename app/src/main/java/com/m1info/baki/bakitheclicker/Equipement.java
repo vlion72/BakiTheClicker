@@ -5,13 +5,15 @@ public abstract class Equipement {
     protected String description;
     protected int bonus;
     protected String rareté;
+    protected int image;
 
-    Equipement(String n, String d, String r, int b){
+    Equipement(String n, String d, String r, int b,int i){
 
         this.nom=n;
         this.description=d;
         this.rareté=r;
         this.bonus=b;
+        this.image=i;
 
     }
     /*getters */
@@ -27,6 +29,9 @@ public abstract class Equipement {
     }
     public int getBonus(){
         return this.bonus;
+    }
+    public int getImage(){
+        return this.image;
     }
 
     /* setters */
