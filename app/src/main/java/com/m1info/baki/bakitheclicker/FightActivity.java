@@ -3,6 +3,7 @@ package com.m1info.baki.bakitheclicker;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,6 +50,7 @@ public class FightActivity extends AppCompatActivity {
         /*equipement*/
         equip= (ImageView) findViewById(R.id.equipement);
         equip.setVisibility(View.INVISIBLE);
+        equip.setOnTouchListener(touchListenerEquipement);
 
         myDmg.setText("Dégats : \n"+Integer.toString(Baki.getAttaque()));
         ennemiDmg.setText("Dégats ennemi :"+Integer.toString(ennemi.getAttaque()));
@@ -174,6 +176,28 @@ public class FightActivity extends AppCompatActivity {
 
 
     }
+
+    public View.OnTouchListener touchListenerEquipement = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch(event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    v.setX(event.getX() + v.getX());
+                    v.setY(event.getY() + v.getY());
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    v.setX(event.getX() + v.getX());
+                    v.setY(event.getY() + v.getY());
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.setX(event.getX() + v.getX());
+                    v.setY(event.getY() + v.getY());
+                    break;
+            }
+            return true;
+        }
+    };
 
 
 
