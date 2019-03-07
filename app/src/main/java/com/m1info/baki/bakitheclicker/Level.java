@@ -27,7 +27,7 @@ public class Level {
             random = new Random().nextInt(10);
             attaque = 5*(1+(10-random)/10)*((ind%5)+1);
             vie= 100*(1+(10-random)/10)*((ind%5)+1);
-            PersoNonJoueur ennemi = new PersoNonJoueur(vie, attaque, "mechant");
+            PersoNonJoueur ennemi = new PersoNonJoueur(vie, attaque, "mechant",R.drawable.oliva);
 
             this.listePNJ.add(ennemi);
         }

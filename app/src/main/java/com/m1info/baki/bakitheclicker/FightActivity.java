@@ -1,7 +1,13 @@
 package com.m1info.baki.bakitheclicker;
 
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +31,8 @@ public class FightActivity extends AppCompatActivity {
     private Bibliotheque biblio;
     private ImageView equip;
     private Equipement stuff;
+    private TabLayout iOffens1;
+    private TabItem iOffens2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,7 @@ public class FightActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fight);
 
         Baki = new PersoJoueur();
-        ennemi = new PersoNonJoueur(100,5,"mechant");
+        ennemi = new PersoNonJoueur(100,5,"Dorian",R.drawable.oliva);
         biblio = new Bibliotheque();
         /* barres de vie*/
         myLp = (ProgressBar) findViewById(R.id.lifePoints);
@@ -50,7 +58,7 @@ public class FightActivity extends AppCompatActivity {
         /*equipement*/
         equip= (ImageView) findViewById(R.id.equipement);
         equip.setVisibility(View.INVISIBLE);
-        equip.setOnTouchListener(touchListenerEquipement);
+        equip.setOnClickListener(touchListenerEquipement);
 
         myDmg.setText("Dégats : \n"+Integer.toString(Baki.getAttaque()));
         ennemiDmg.setText("Dégats ennemi :"+Integer.toString(ennemi.getAttaque()));
@@ -62,11 +70,17 @@ public class FightActivity extends AppCompatActivity {
         stage.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
         ennemiBtn = (ImageButton) findViewById(R.id.ennemi);
-        //ennemiBtn.setImageResource(R.drawable.dorian);
+        ennemiBtn.setBackgroundResource(ennemi.getImage());
 
         /*creation de la bibliothèque */
         biblio=new Bibliotheque();
 
+        /*inventaire*/
+        iOffens1 = (TabLayout) findViewById(R.id.inventaire);
+        iOffens1.setOnLongClickListener(tablistener);
+
+        iOffens2 = (TabItem) findViewById(R.id.IOffens2);
+        //iOffens2.setOnLongClickListener(tablistener);
 
 
         /* demarrage du combat */
@@ -138,7 +152,7 @@ public class FightActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                //equip.setImageResource(stuff.getImage());
+                equip.setImageResource(stuff.getImage());
                 equip.setVisibility(View.VISIBLE);
 
             }
@@ -176,33 +190,42 @@ public class FightActivity extends AppCompatActivity {
 
 
     }
-
-    public View.OnTouchListener touchListenerEquipement = new View.OnTouchListener() {
+    /*fait bouger l equipement */
+    public View.OnClickListener touchListenerEquipement = new View.OnClickListener() {
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch(event.getAction())
-            {
-                case MotionEvent.ACTION_DOWN:
-                    v.setX(event.getX() + v.getX());
-                    v.setY(event.getY() + v.getY());
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    v.setX(event.getX() + v.getX());
-                    v.setY(event.getY() + v.getY());
-                    break;
-                case MotionEvent.ACTION_UP:
-                    v.setX(event.getX() + v.getX());
-                    v.setY(event.getY() + v.getY());
-                    break;
-            }
-            return true;
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            builder.setCancelable(true);
+            builder.setTitle(stuff.getNom());
+            builder.setMessage(stuff.getDescription());
+            builder.setPositiveButton("Confirmer",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     };
 
 
 
 
-
+    public View.OnLongClickListener tablistener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Log.d("LongClick","longclick detected");
+            view.setBackgroundResource(stuff.getImage());
+            return true;
+        }
+    };
 
 
 
