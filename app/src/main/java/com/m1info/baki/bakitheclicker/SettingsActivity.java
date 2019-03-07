@@ -42,15 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        Button btnFR = (Button)findViewById(R.id.buttonFR);
-        btnFR.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // Change le language
-                setLocale("FR");
-            }
-        });
-
 
 
         Button btnBck = (Button)findViewById(R.id.buttonBack);
