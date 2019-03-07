@@ -52,12 +52,52 @@ public class LevelSelectActivity extends AppCompatActivity {
         });
 
 
-        ImageButton btn1 = (ImageButton)findViewById(R.id.imageButton1);
+        ImageButton btn1 = findViewById(R.id.imageButton1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
                 intent.putExtra("level", 1);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btn2 = findViewById(R.id.imageButton2);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
+                intent.putExtra("level", 2);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btn3 = findViewById(R.id.imageButton3);
+        btn3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
+                intent.putExtra("level", 3);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btn4 = findViewById(R.id.imageButton4);
+        btn4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
+                intent.putExtra("level", 4);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton btn5 = findViewById(R.id.imageButton5);
+        btn5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
+                intent.putExtra("level", 5);
                 startActivity(intent);
             }
         });
