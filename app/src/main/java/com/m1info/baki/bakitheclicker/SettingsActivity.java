@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         Button btnBck = (Button)findViewById(R.id.buttonBack);
         btnBck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(LevelSelectActivity.this, MainMenuActivity.class));
+                startActivity(new Intent(SettingsActivity.this, MainMenuActivity.class));
             }
         });
 
