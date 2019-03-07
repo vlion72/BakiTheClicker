@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">BakiTheClicker</string>
+    <string name="imgDescMain">Voici Baki</string>
+
+    <string name="continueAv">Continuer</string>
+    <string name="chooseStage">Choisir niveau</string>
+    <string name="settings">Parametres</string>
+    <string name="infos">?</string>
+
+    <string name="lang">Langage</string>
+
+    <string name="buttPrev">prec</string>
+    <string name="buttNext">suiv</string>
+    <string name="buttHome">accueil</string>
+
+    <string name="title_activity_settings">Parametres</string>
+</resources>

@@ -44,13 +44,7 @@ public class LevelSelectActivity extends AppCompatActivity {
 
 
 
-
         Button btnBck = (Button)findViewById(R.id.buttonBack);
-
-        ImageButton btn1 = (ImageButton)findViewById(R.id.imageButton1);
-
-
-
         btnBck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(LevelSelectActivity.this, MainMenuActivity.class));
@@ -58,6 +52,7 @@ public class LevelSelectActivity extends AppCompatActivity {
         });
 
 
+        ImageButton btn1 = (ImageButton)findViewById(R.id.imageButton1);
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 

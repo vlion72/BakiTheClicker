@@ -23,6 +23,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
+
         /*Button btnTest = (Button)findViewById(R.id.buttonInfo);
         btn.setOnClickListener(new View.OnClickListener() {
 
