@@ -2,8 +2,8 @@ package com.m1info.baki.bakitheclicker;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +30,9 @@ public class FightActivity extends AppCompatActivity {
     private Bibliotheque biblio;
     private ImageView equip;
     private Equipement stuff;
+    /*inventaire correspond à l inventaire pour les objets offesifs tandis que inventaireDef les objets défensifs*/
     private TabLayout inventaire;
+    private TabLayout inventaireDef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,10 @@ public class FightActivity extends AppCompatActivity {
 
         /*inventaire*/
         inventaire= (TabLayout) findViewById(R.id.inventaire);
-        inventaire.setSelected(false);
+        //inventaire.setSelected(false);
+
+        inventaireDef= (TabLayout) findViewById(R.id.inventaire);
+        //inventaireDef.setSelected(false);
 
         /* demarrage du combat */
         t = new Thread() {
@@ -111,8 +116,13 @@ public class FightActivity extends AppCompatActivity {
 
             }
         });
-
-        dropEquipementOffensif();
+        double choixOD;
+        choixOD = Math.random();
+        if(choixOD>=0.5){
+            dropEquipementOffensif();
+        }else{
+            dropEquipementDefensif();
+        }
 
     }
 
@@ -153,6 +163,25 @@ public class FightActivity extends AppCompatActivity {
         });
     }
 
+    public void dropEquipementDefensif(){
+        double choix;
+        choix = Math.random();
+        if(choix>0.7){
+            stuff=biblio.EquipementsDefensifs.get(1);
+        }else{
+            stuff=biblio.EquipementsDefensifs.get(0);
+        }
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                equip.setImageResource(stuff.getImage());
+                equip.setVisibility(View.VISIBLE);
+
+            }
+        });
+    }
+
 
 
     public void startFight(){
@@ -169,6 +198,36 @@ public class FightActivity extends AppCompatActivity {
             }
             if(Baki.getVie() <= 0) {
                 Baki.mourir();
+                findViewById(R.id.fightView).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
+                        builder.setCancelable(true);
+                        builder.setTitle("YOU LOOSE");
+                        builder.setIcon(R.drawable.bakimain);
+                        builder.setPositiveButton("Menu Principal",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                        startActivity(new Intent(FightActivity.this, MainMenuActivity.class));
+
+                                    }
+                                });
+                        builder.setNegativeButton("Recommencer", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                                Intent intent = new Intent(FightActivity.this, FightActivity.class);
+                                intent.putExtra("level", 1);
+                                startActivity(intent);
+                            }
+                        });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
             }
             try {
                 t.sleep(1000);
@@ -204,7 +263,12 @@ public class FightActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
-                                    inventaire.setOnTabSelectedListener(tablistener);
+                                    if(stuff.definirBonus()){
+                                        inventaire.setOnTabSelectedListener(tablistener);
+                                    }else{
+                                        inventaireDef.setOnTabSelectedListener(tablistener);
+                                    }
+
                                 }
                             });
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

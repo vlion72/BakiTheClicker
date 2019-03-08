@@ -6,6 +6,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.design.widget.TabLayout
+        android:id="@+id/inventaireD"
+        android:layout_width="236dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginTop="605dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/inventaire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:tabBackground="@xml/tab_color_selector">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TabLayout>
+
     <ProgressBar
         android:id="@+id/lifePoints"
         style="?android:attr/progressBarStyleHorizontal"
@@ -28,35 +53,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lifePoints" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/inventaire"
-        android:layout_width="237dp"
-        android:layout_height="84dp"
-        android:layout_marginStart="170dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@xml/tab_color_selector">
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/IOffens1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/IOffens2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-    </android.support.design.widget.TabLayout>
-
     <ImageView
         android:id="@+id/Bakimage"
-        android:layout_width="158dp"
-        android:layout_height="82dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="152dp"
+        android:layout_height="96dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/inventaire"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +97,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="12dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lifePoints"
         app:layout_constraintTop_toTopOf="parent" />
@@ -118,25 +118,55 @@
         android:layout_height="98dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="260dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/gantsboxe" />
 
     <ImageButton
         android:id="@+id/ennemi"
-        android:layout_width="196dp"
-        android:layout_height="301dp"
+        android:layout_width="193dp"
+        android:layout_height="338dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/oliva"
+        app:layout_constraintBottom_toTopOf="@+id/equipement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ennemiLP"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/inventaire"
+        android:layout_width="236dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/lifePoints"
-        app:layout_constraintVertical_bias="0.417" />
+        app:tabBackground="@xml/tab_color_selector">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TabLayout>
+
+    <TabHost
+        android:layout_width="232dp"
+        android:layout_height="169dp"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="458dp"/>
+
 </android.support.constraint.ConstraintLayout>

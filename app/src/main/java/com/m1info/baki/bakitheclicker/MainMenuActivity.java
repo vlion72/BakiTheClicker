@@ -24,13 +24,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
 
-        /*Button btnTest = (Button)findViewById(R.id.buttonInfo);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button btnSet = (Button)findViewById(R.id.buttonSettings);
+        btnSet.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(MainMenuActivity.this, TestActivity.class));
+                startActivity(new Intent(MainMenuActivity.this, SettingsActivity.class));
             }
-        });*/
+        });
 
     }
 
