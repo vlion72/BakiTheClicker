@@ -6,31 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/inventaireD"
-        android:layout_width="236dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="175dp"
-        android:layout_marginTop="605dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/inventaire"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:tabBackground="@xml/tab_color_selector">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </android.support.design.widget.TabLayout>
-
     <ProgressBar
         android:id="@+id/lifePoints"
         style="?android:attr/progressBarStyleHorizontal"
@@ -57,9 +32,7 @@
         android:id="@+id/Bakimage"
         android:layout_width="152dp"
         android:layout_height="96dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/inventaire"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/bakimain" />
 
@@ -141,32 +114,45 @@
         app:layout_constraintTop_toBottomOf="@+id/ennemiLP"
         app:layout_constraintVertical_bias="0.066" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/inventaire"
-        android:layout_width="236dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="200dp"
+    <android.support.v7.widget.GridLayout
+        android:layout_width="216dp"
+        android:layout_height="129dp"
+        android:layout_marginStart="30dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tabBackground="@xml/tab_color_selector">
+        app:layout_constraintStart_toEndOf="@+id/Bakimage">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/InventaireOffens1"
+            android:layout_width="104dp"
+            android:layout_height="66dp"
+            android:background="@drawable/offensif" />
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/InventaireDef1"
+            android:layout_width="92dp"
+            android:layout_height="63dp"
+            android:background="@drawable/defensif"
+            app:layout_column="1"
+            app:layout_row="0" />
 
-    </android.support.design.widget.TabLayout>
+        <ImageButton
+            android:id="@+id/InventaireOffens2"
+            android:layout_width="104dp"
+            android:layout_height="61dp"
+            android:background="@drawable/offensif"
+            app:layout_column="0"
+            app:layout_row="1" />
 
-    <TabHost
-        android:layout_width="232dp"
-        android:layout_height="169dp"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="458dp"/>
+        <ImageButton
+            android:id="@+id/InventaireDef2"
+            android:layout_width="90dp"
+            android:layout_height="62dp"
+            android:background="@drawable/defensif"
+            app:layout_column="1"
+            app:layout_row="1" />
+    </android.support.v7.widget.GridLayout>
 
 </android.support.constraint.ConstraintLayout>

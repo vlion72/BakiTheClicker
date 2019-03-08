@@ -4,7 +4,6 @@ package com.m1info.baki.bakitheclicker;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,23 +15,34 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class FightActivity extends AppCompatActivity {
+    /* vie */
     private ProgressBar myLp;
     private ProgressBar ennemiLp;
+    /*personnages*/
     private ImageButton ennemiBtn;
+    private ImageView bakimage;
     private PersoNonJoueur ennemi;
     private PersoJoueur Baki;
+
+    /*textviews*/
     private TextView myDmg;
     private TextView stage;
     private TextView ennemiDmg;
     private TextView ennemiName;
+    /*Threads */
     private Thread t;
     private Thread tap;
+    /*equipement*/
     private Bibliotheque biblio;
     private ImageView equip;
     private Equipement stuff;
     /*inventaire correspond à l inventaire pour les objets offesifs tandis que inventaireDef les objets défensifs*/
-    private TabLayout inventaire;
-    private TabLayout inventaireDef;
+    private ImageButton io1;
+    private ImageButton io2;
+    private ImageButton id1;
+    private ImageButton id2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +81,17 @@ public class FightActivity extends AppCompatActivity {
 
         ennemiBtn = (ImageButton) findViewById(R.id.ennemi);
         ennemiBtn.setBackgroundResource(ennemi.getImage());
-
+        bakimage = (ImageView) findViewById(R.id.Bakimage);
+        bakimage.setOnLongClickListener(bakilistener);
         /*creation de la bibliothèque */
         biblio=new Bibliotheque();
 
         /*inventaire*/
-        inventaire= (TabLayout) findViewById(R.id.inventaire);
-        //inventaire.setSelected(false);
+        io1= (ImageButton) findViewById(R.id.InventaireOffens1);
+        io2 =(ImageButton) findViewById(R.id.InventaireOffens2);
+        id1=(ImageButton) findViewById(R.id.InventaireDef1);
+        id2=(ImageButton) findViewById(R.id.InventaireDef2);
 
-        inventaireDef= (TabLayout) findViewById(R.id.inventaire);
-        //inventaireDef.setSelected(false);
 
         /* demarrage du combat */
         t = new Thread() {
@@ -264,9 +275,11 @@ public class FightActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
                                     if(stuff.definirBonus()){
-                                        inventaire.setOnTabSelectedListener(tablistener);
+                                        io1.setOnClickListener(inventaireListener);
+                                        io2.setOnClickListener(inventaireListener);
                                     }else{
-                                        inventaireDef.setOnTabSelectedListener(tablistener);
+                                        id1.setOnClickListener(inventaireListener);
+                                        id2.setOnClickListener(inventaireListener);
                                     }
 
                                 }
@@ -289,23 +302,47 @@ public class FightActivity extends AppCompatActivity {
 
 
 
-    public TabLayout.OnTabSelectedListener tablistener = new TabLayout.OnTabSelectedListener() {
+    public View.OnClickListener inventaireListener = new View.OnClickListener() {
         @Override
-        public void onTabSelected(TabLayout.Tab tab) {
+        public void onClick(View v) {
             Log.d("clicktab","click on tab detected");
-            tab.setIcon(stuff.getImage());
+            v.setBackgroundResource(stuff.getImage());
             Baki.raiseAttaque(stuff.getBonus());
             equip.setVisibility(View.GONE);
+            /*on met tous les listener a nul une fois le click effectué*/
+            io1.setOnClickListener(null);
+            io2.setOnClickListener(null);
+            id1.setOnClickListener(null);
+            id2.setOnClickListener(null);
         }
-        public void onTabUnselected(TabLayout.Tab tab) {
-            Log.d("unselect","unselect detected");
-            tab.setIcon(null);
 
-        }
-        public void onTabReselected(TabLayout.Tab tab) {
-            Log.d("reselected","reselect detected");
+    };
 
+    public View.OnLongClickListener bakilistener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            findViewById(R.id.fightView).post(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(Baki.getNom());
+                    builder.setMessage("Total Attaque :"+Baki.getAttaque()+"\n"+"Total vie :"+Baki.getVie());
+                    builder.setIcon(R.drawable.bakimain);
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
+          return true;
         }
+
     };
 
 
