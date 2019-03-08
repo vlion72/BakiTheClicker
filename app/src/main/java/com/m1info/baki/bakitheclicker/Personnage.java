@@ -33,7 +33,9 @@ public abstract class Personnage {
         this.vie= v;
     }
 
-    public void setEtat(boolean etat){
-        this.enVie = etat;
+    public void raiseAttaque(int a){
+        this.attaque+=a;
     }
+
+
 }
