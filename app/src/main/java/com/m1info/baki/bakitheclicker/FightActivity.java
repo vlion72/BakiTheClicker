@@ -3,6 +3,7 @@ package com.m1info.baki.bakitheclicker;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,8 @@ public class FightActivity extends AppCompatActivity {
     private ImageButton io2;
     private ImageButton id1;
     private ImageButton id2;
+
+    private int nLevel;
 
 
 
@@ -92,6 +95,10 @@ public class FightActivity extends AppCompatActivity {
         id1=(ImageButton) findViewById(R.id.InventaireDef1);
         id2=(ImageButton) findViewById(R.id.InventaireDef2);
 
+        /* recuperation du level */
+        nLevel=0;
+        Intent intent = getIntent();
+        intent.getIntExtra("level",nLevel);
 
         /* demarrage du combat */
         t = new Thread() {
@@ -206,6 +213,7 @@ public class FightActivity extends AppCompatActivity {
 
             if(ennemi.getVie() <= 0) {
                 tuer();
+
             }
             if(Baki.getVie() <= 0) {
                 Baki.mourir();
@@ -230,7 +238,7 @@ public class FightActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                                 Intent intent = new Intent(FightActivity.this, FightActivity.class);
-                                intent.putExtra("level", 1);
+                                intent.putExtra("level", nLevel);
                                 startActivity(intent);
                             }
                         });
@@ -305,7 +313,6 @@ public class FightActivity extends AppCompatActivity {
     public View.OnClickListener inventaireListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d("clicktab","click on tab detected");
             v.setBackgroundResource(stuff.getImage());
             Baki.raiseAttaque(stuff.getBonus());
             equip.setVisibility(View.GONE);
@@ -314,9 +321,11 @@ public class FightActivity extends AppCompatActivity {
             io2.setOnClickListener(null);
             id1.setOnClickListener(null);
             id2.setOnClickListener(null);
+            validerNiveau();
         }
 
     };
+
 
     public View.OnLongClickListener bakilistener = new View.OnLongClickListener() {
         @Override
@@ -345,6 +354,48 @@ public class FightActivity extends AppCompatActivity {
 
     };
 
+    public void validerNiveau(){
+        findViewById(R.id.fightView).post(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("ATTAQUE",Baki.getAttaque());
+                editor.putInt("VIE",Baki.getVie());
+                editor.putInt("LEVEL",nLevel);
+                editor.putInt("EQUIPMENTO1",io1.getBackground().hashCode());
+                editor.putInt("EQUIPMENTO2",io2.getBackground().hashCode());
+                editor.putInt("EQUIPMENTD1",id1.getBackground().hashCode());
+                editor.putInt("EQUIPMENTD2",id2.getBackground().hashCode());
+                editor.commit();
 
+                /*pop up */
+                AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("YOU WIN");
+                builder.setMessage("Vous accedez desormais au niveau suivant ");
+                builder.setIcon(R.drawable.bakimain);
+                builder.setPositiveButton("Niveau suivant", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        Intent intent = new Intent(FightActivity.this, FightActivity.class);
+                        intent.putExtra("level", nLevel+1);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("Selection des niveaux", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        startActivity(new Intent(FightActivity.this, LevelSelectActivity.class));
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
 
 }
