@@ -28,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Change le language
                 setLocale("ENG");
+                startActivity(new Intent(SettingsActivity.this, MainMenuActivity.class));
             }
         });
 
@@ -38,10 +39,10 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Change le language
                 setLocale("FR");
+                startActivity(new Intent(SettingsActivity.this, MainMenuActivity.class));
+
             }
         });
-
-
 
 
         Button btnBck = (Button)findViewById(R.id.buttonBack);
