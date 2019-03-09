@@ -1,12 +1,19 @@
 package com.m1info.baki.bakitheclicker;
 
+import java.util.ArrayList;
+
 public class PersoJoueur extends Personnage {
+    /*liste contenant le nom des equipements de Baki */
+    public ArrayList<String> bakipement;
 
-    public PersoJoueur(){
+    public PersoJoueur(int a,int v, ArrayList<String>l){
 
-        this.attaque=5;
+        this.attaque=a;
         this.nom="Baki";
         this.enVie=true;
-        this.vie=50;
+        this.vie=v;
+        this.bakipement=l;
+
     }
+
 }

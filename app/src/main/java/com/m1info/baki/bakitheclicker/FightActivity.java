@@ -4,10 +4,10 @@ package com.m1info.baki.bakitheclicker;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,10 +15,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class FightActivity extends AppCompatActivity {
     /* vie */
     private ProgressBar myLp;
     private ProgressBar ennemiLp;
+    private int vie;
     /*personnages*/
     private ImageButton ennemiBtn;
     private ImageView bakimage;
@@ -52,9 +55,22 @@ public class FightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
 
-        Baki = new PersoJoueur();
+        /* on charge la sauvegarde */
+        int attaque;
+        ArrayList<String> equipement =new ArrayList<String>();
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        attaque=prefs.getInt("ATTAQUE",5);
+        this.vie=prefs.getInt("VIE",50);
+        equipement.add(0,prefs.getString("EQUIPEMENTO1","null"));
+        equipement.add(1,prefs.getString("EQUIPEMENTO2","null"));
+        equipement.add(2,prefs.getString("EQUIPEMENTD1","null"));
+        equipement.add(3,prefs.getString("EQUIPEMENTD2","null"));
+
+        /*initialisation Baki + ennemi */
+        Baki = new PersoJoueur(attaque,vie,equipement);
         ennemi = new PersoNonJoueur(100,5,"Oliva",R.drawable.oliva);
         biblio = new Bibliotheque();
+
         /* barres de vie*/
         myLp = (ProgressBar) findViewById(R.id.lifePoints);
         ennemiLp = (ProgressBar) findViewById(R.id.ennemiLP);
@@ -62,6 +78,9 @@ public class FightActivity extends AppCompatActivity {
         ennemiLp.setProgress(ennemiLp.getMax());
         myLp.setMax(Baki.getVie());
         ennemiLp.setMax(ennemi.getVie());
+
+        myLp.getProgressDrawable().setColorFilter(
+                Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
 
         /* textviews */
         myDmg = (TextView) findViewById(R.id.myDmgText);
@@ -94,6 +113,28 @@ public class FightActivity extends AppCompatActivity {
         io2 =(ImageButton) findViewById(R.id.InventaireOffens2);
         id1=(ImageButton) findViewById(R.id.InventaireDef1);
         id2=(ImageButton) findViewById(R.id.InventaireDef2);
+
+        for(int i=0;i<4;i++){
+            for(int j=0;j<biblio.EquipementsDefensifs.size();j++){
+                if(Baki.bakipement.get(i)==biblio.EquipementsDefensifs.get(j).getNom()){
+                     if(i==2){
+                        id1.setBackgroundResource(biblio.EquipementsDefensifs.get(j).getImage());
+                    }else if(i==3){
+                        id2.setBackgroundResource(biblio.EquipementsDefensifs.get(j).getImage());
+                    }
+                }else if(Baki.bakipement.get(i)==biblio.EquipementsOffensifs.get(j).getNom()){
+                    if(i==0){
+                        io1.setBackgroundResource(biblio.EquipementsOffensifs.get(j).getImage());
+                    }else if(i==1){
+                        io2.setBackgroundResource(biblio.EquipementsOffensifs.get(j).getImage());
+
+                    }
+                }
+            }
+        }
+
+
+
 
         /* recuperation du level */
         nLevel=0;
@@ -297,6 +338,8 @@ public class FightActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                             equip.setVisibility(View.GONE);
+                            Baki.setVie(vie);// remet la vie de Baki a la valeur de debut de partie
+                            validerNiveau();
                         }
                     });
 
@@ -314,7 +357,21 @@ public class FightActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             v.setBackgroundResource(stuff.getImage());
-            Baki.raiseAttaque(stuff.getBonus());
+            if(stuff.definirBonus()){
+                Baki.raiseAttaque(stuff.getBonus());
+                Baki.setVie(vie); // remet la vie de Baki a la valeur de debut de partie
+            }else{
+                Baki.setVie(vie+stuff.getBonus());
+            }
+            if(v==io1){
+                Baki.bakipement.add(0,stuff.getNom());
+            }else if(v==io2){
+                Baki.bakipement.add(1,stuff.getNom());
+            }else if(v==id1){
+                Baki.bakipement.add(2,stuff.getNom());
+            }else{
+                Baki.bakipement.add(3,stuff.getNom());
+            }
             equip.setVisibility(View.GONE);
             /*on met tous les listener a nul une fois le click effectué*/
             io1.setOnClickListener(null);
@@ -363,10 +420,10 @@ public class FightActivity extends AppCompatActivity {
                 editor.putInt("ATTAQUE",Baki.getAttaque());
                 editor.putInt("VIE",Baki.getVie());
                 editor.putInt("LEVEL",nLevel);
-                editor.putInt("EQUIPMENTO1",io1.getBackground().hashCode());
-                editor.putInt("EQUIPMENTO2",io2.getBackground().hashCode());
-                editor.putInt("EQUIPMENTD1",id1.getBackground().hashCode());
-                editor.putInt("EQUIPMENTD2",id2.getBackground().hashCode());
+                editor.putString("EQUIPEMENTO1",Baki.bakipement.get(0));
+                editor.putString("EQUIPEMENTO2",Baki.bakipement.get(1));
+                editor.putString("EQUIPEMENTD1",Baki.bakipement.get(2));
+                editor.putString("EQUIPEMENTD2",Baki.bakipement.get(3));
                 editor.commit();
 
                 /*pop up */
