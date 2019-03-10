@@ -6,6 +6,7 @@ import java.util.List;
 public class Bibliotheque {
     public ArrayList<EquipementOffensif> EquipementsOffensifs;
     public ArrayList<EquipementDefensif> EquipementsDefensifs;
+    public int longueur;
 
     public Bibliotheque(){
         EquipementOffensif bandages = new EquipementOffensif("Bandages","Equipement permettant d'affliger des dégats un peu supérieures à ceux de base","normale",5,R.drawable.bandages);
@@ -21,5 +22,7 @@ public class Bibliotheque {
         EquipementsDefensifs.add(kimono);
         EquipementsDefensifs.add(gilet);
 
+        longueur=2;
     }
+
 }

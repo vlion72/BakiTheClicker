@@ -23,6 +23,7 @@ public class FightActivity extends AppCompatActivity {
     private ProgressBar myLp;
     private ProgressBar ennemiLp;
     private int vie;
+
     /*personnages*/
     private ImageButton ennemiBtn;
     private ImageView bakimage;
@@ -34,20 +35,27 @@ public class FightActivity extends AppCompatActivity {
     private TextView stage;
     private TextView ennemiDmg;
     private TextView ennemiName;
+
     /*Threads */
     private Thread t;
     private Thread tap;
+
     /*equipement*/
     private Bibliotheque biblio;
     private ImageView equip;
     private Equipement stuff;
+
     /*inventaire correspond à l inventaire pour les objets offesifs tandis que inventaireDef les objets défensifs*/
     private ImageButton io1;
     private ImageButton io2;
     private ImageButton id1;
     private ImageButton id2;
 
+    /* level */
     private int nLevel;
+    private Level lvl;
+
+    private int actualEnnemi;
 
 
 
@@ -61,15 +69,23 @@ public class FightActivity extends AppCompatActivity {
         ArrayList<String> equipement =new ArrayList<String>();
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         attaque=prefs.getInt("ATTAQUE",5);
-        this.vie=prefs.getInt("VIE",50);
+        this.vie=prefs.getInt("VIE",200);
         equipement.add(0,prefs.getString("EQUIPEMENTO1","null"));
         equipement.add(1,prefs.getString("EQUIPEMENTO2","null"));
         equipement.add(2,prefs.getString("EQUIPEMENTD1","null"));
         equipement.add(3,prefs.getString("EQUIPEMENTD2","null"));
 
+        /* recuperation du level */
+        nLevel=0;
+        Intent intent = getIntent();
+        nLevel=intent.getIntExtra("level",0);
+
+        lvl=new Level(nLevel);
+
         /*initialisation Baki + ennemi */
+        actualEnnemi=0;
         Baki = new PersoJoueur(attaque,vie,equipement);
-        ennemi = new PersoNonJoueur(100,5,"Oliva",R.drawable.oliva);
+        ennemi = lvl.getListePNJ().get(actualEnnemi);
         biblio = new Bibliotheque();
 
         /* barres de vie*/
@@ -93,21 +109,16 @@ public class FightActivity extends AppCompatActivity {
         equip.setVisibility(View.INVISIBLE);
         equip.setOnClickListener(touchListenerEquipement);
 
-        myDmg.setText("Dégats : \n"+Integer.toString(Baki.getAttaque()));
-        ennemiDmg.setText("Dégats ennemi :"+Integer.toString(ennemi.getAttaque()));
-        ennemiName.setText(ennemi.getNom());
-        stage.setText("Etage 1");
+
         myDmg.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         ennemiDmg.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         ennemiName.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         stage.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
         ennemiBtn = (ImageButton) findViewById(R.id.ennemi);
-        ennemiBtn.setBackgroundResource(ennemi.getImage());
+
         bakimage = (ImageView) findViewById(R.id.Bakimage);
         bakimage.setOnLongClickListener(bakilistener);
-        /*creation de la bibliothèque */
-        biblio=new Bibliotheque();
 
         /*inventaire*/
         io1= (ImageButton) findViewById(R.id.InventaireOffens1);
@@ -116,17 +127,17 @@ public class FightActivity extends AppCompatActivity {
         id2=(ImageButton) findViewById(R.id.InventaireDef2);
 
         for(int i=0;i<4;i++){
-            for(int j=0;j<biblio.EquipementsDefensifs.size();j++){
+            for(int j=0;j<biblio.longueur;j++){
                 if(Baki.bakipement.get(i)==biblio.EquipementsDefensifs.get(j).getNom()){
                      if(i==2){
                         id1.setBackgroundResource(biblio.EquipementsDefensifs.get(j).getImage());
-                    }else if(i==3){
+                    }if(i==3){
                         id2.setBackgroundResource(biblio.EquipementsDefensifs.get(j).getImage());
                     }
                 }else if(Baki.bakipement.get(i)==biblio.EquipementsOffensifs.get(j).getNom()){
                     if(i==0){
                         io1.setBackgroundResource(biblio.EquipementsOffensifs.get(j).getImage());
-                    }else if(i==1){
+                    }if(i==1){
                         io2.setBackgroundResource(biblio.EquipementsOffensifs.get(j).getImage());
 
                     }
@@ -137,10 +148,7 @@ public class FightActivity extends AppCompatActivity {
 
 
 
-        /* recuperation du level */
-        nLevel=0;
-        Intent intent = getIntent();
-        nLevel=intent.getIntExtra("level",0);
+
 
         /* demarrage du combat */
         t = new Thread() {
@@ -245,7 +253,36 @@ public class FightActivity extends AppCompatActivity {
 
 
     public void startFight(){
+        runOnUiThread(new Runnable() {
 
+            @Override
+            public void run() {
+                SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+                Baki.setAttaque(prefs.getInt("ATTAQUE",5));
+                Baki.setVie(prefs.getInt("VIE",200));
+
+
+
+
+
+                Baki.bakipement.remove(0);
+                Baki.bakipement.add(0,prefs.getString("EQUIPEMENTO1","null"));
+                Baki.bakipement.remove(1);
+                Baki.bakipement.add(1,prefs.getString("EQUIPEMENTO2","null"));
+                Baki.bakipement.remove(2);
+                Baki.bakipement.add(2,prefs.getString("EQUIPEMENTD1","null"));
+                Baki.bakipement.remove(3);
+                Baki.bakipement.add(3,prefs.getString("EQUIPEMENTD2","null"));
+
+                myDmg.setText("Dégats : \n"+Integer.toString(Baki.getAttaque()));
+                ennemiDmg.setText("Dégats ennemi :"+Integer.toString(ennemi.getAttaque()));
+                ennemiName.setText(ennemi.getNom());
+                stage.setText("Etage 1");
+                ennemiBtn.setBackgroundResource(ennemi.getImage());
+                ennemiBtn.setVisibility(View.VISIBLE);
+
+            }
+        });
 
         while(Baki.getEtat() && ennemi.getEtat()) { /*tant qu il n y a pas de mort on boucle */
             Baki.setVie(Baki.getVie() - ennemi.getAttaque());
@@ -334,13 +371,44 @@ public class FightActivity extends AppCompatActivity {
 
                                 }
                             });
+                    /* quand tu ne veux pas l equipement */
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                             equip.setVisibility(View.GONE);
                             Baki.setVie(vie);// remet la vie de Baki a la valeur de debut de partie
-                            validerNiveau();
+                            if(actualEnnemi<lvl.getNbPersonnages()-1){
+                                actualEnnemi+=1;
+                                ennemi=lvl.getListePNJ().get(actualEnnemi);
+
+                                SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putInt("ATTAQUE",Baki.getAttaque());
+                                editor.putInt("VIE",Baki.getVie());
+                                editor.putInt("LEVEL",nLevel);
+                                editor.commit();
+
+                                /* demarrage du combat */
+                                t = new Thread() {
+                                    public void run() {
+                                        startFight();
+
+                                    }
+                                };
+                                tap = new Thread() {
+                                    public void run() {
+                                        taper();
+                                    }
+                                };
+
+
+                                t.start();
+                                tap.start();
+                            }else{
+                                validerNiveau();
+                            }
+
                         }
                     });
 
@@ -364,14 +432,31 @@ public class FightActivity extends AppCompatActivity {
             }else{
                 Baki.setVie(vie+stuff.getBonus());
             }
+            SharedPreferences prefs = getPreferences(MODE_PRIVATE);
             if(v==io1){
+                Baki.bakipement.remove(0);
                 Baki.bakipement.add(0,stuff.getNom());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("EQUIPEMENTO1",Baki.bakipement.get(0));
+                editor.commit();
             }else if(v==io2){
+                Baki.bakipement.remove(1);
                 Baki.bakipement.add(1,stuff.getNom());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("EQUIPEMENTO2",Baki.bakipement.get(1));
+                editor.commit();
             }else if(v==id1){
+                Baki.bakipement.remove(2);
                 Baki.bakipement.add(2,stuff.getNom());
-            }else{
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("EQUIPEMENTD1",Baki.bakipement.get(2));
+                editor.commit();
+            }else if(v==id2){
+                Baki.bakipement.remove(3);
                 Baki.bakipement.add(3,stuff.getNom());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("EQUIPEMENTD2",Baki.bakipement.get(3));
+                editor.commit();
             }
             equip.setVisibility(View.GONE);
             /*on met tous les listener a nul une fois le click effectué*/
@@ -379,7 +464,38 @@ public class FightActivity extends AppCompatActivity {
             io2.setOnClickListener(null);
             id1.setOnClickListener(null);
             id2.setOnClickListener(null);
-            validerNiveau();
+            if(actualEnnemi<lvl.getNbPersonnages()-1){
+                actualEnnemi+=1;
+                ennemi=lvl.getListePNJ().get(actualEnnemi);
+
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("ATTAQUE",Baki.getAttaque());
+                editor.putInt("VIE",Baki.getVie());
+                editor.putInt("LEVEL",nLevel);
+                editor.commit();
+
+
+
+                /* demarrage du combat */
+                t = new Thread() {
+                    public void run() {
+                        startFight();
+
+                    }
+                };
+                tap = new Thread() {
+                    public void run() {
+                        taper();
+                    }
+                };
+
+
+                t.start();
+                tap.start();
+            }else{
+                validerNiveau();
+            }
         }
 
     };

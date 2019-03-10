@@ -15,5 +15,9 @@ public class PersoJoueur extends Personnage {
         this.bakipement=l;
 
     }
+    public void setAttaque(int a){
+        this.attaque=a;
+    }
+
 
 }
