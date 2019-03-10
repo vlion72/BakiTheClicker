@@ -24,13 +24,26 @@ import static com.m1info.baki.bakitheclicker.R.drawable.lockiconmini;
 public class LevelSelectActivity extends AppCompatActivity {
 
 
-
+    public static List<ImageButton> listButt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
+
+        int levelDone;
+        /*preferences pour la page LevelSelect*/
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        int levelDone = prefs.getInt("LEVEL", 0);
+        Intent i = getIntent();
+        levelDone=i.getIntExtra("leveldone",0);
+
+        /* evite de remettre levelDone a 0 quand l appli restart*/
+        if(levelDone != 0){
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("LEVEL",levelDone);
+            editor.commit();
+        }
+
+        levelDone = prefs.getInt("LEVEL", 0);
 
         ImageButton btn1 = findViewById(R.id.imageButton1);
         ImageButton btn2 = findViewById(R.id.imageButton2);
@@ -39,15 +52,16 @@ public class LevelSelectActivity extends AppCompatActivity {
         ImageButton btn5 = findViewById(R.id.imageButton5);
 
 
-        List<ImageButton> listButt = new ArrayList<>();
+        listButt = new ArrayList<>();
         listButt.add(btn1);
         listButt.add(btn2);
         listButt.add(btn3);
         listButt.add(btn4);
         listButt.add(btn5);
+
         int ind=0;
 
-        for(ImageButton but:listButt){
+        for(ImageButton but:LevelSelectActivity.listButt){
             Log.d("STATE","Level done : "+levelDone+" ind : "+ind);
             if(levelDone>=ind) {
                 Log.d("STATE","HERE");

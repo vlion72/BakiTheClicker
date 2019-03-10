@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -139,7 +140,7 @@ public class FightActivity extends AppCompatActivity {
         /* recuperation du level */
         nLevel=0;
         Intent intent = getIntent();
-        intent.getIntExtra("level",nLevel);
+        nLevel=intent.getIntExtra("level",0);
 
         /* demarrage du combat */
         t = new Thread() {
@@ -445,7 +446,9 @@ public class FightActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        startActivity(new Intent(FightActivity.this, LevelSelectActivity.class));
+                        Intent i =new Intent(FightActivity.this, LevelSelectActivity.class);
+                        i.putExtra("leveldone",nLevel);
+                        startActivity(i);
                     }
                 });
 
