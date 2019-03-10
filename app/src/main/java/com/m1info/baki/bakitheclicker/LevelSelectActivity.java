@@ -1,9 +1,11 @@
 package com.m1info.baki.bakitheclicker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -11,15 +13,58 @@ import android.widget.GridLayout.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.widget.GridLayout.LayoutParams.*;
+import static com.m1info.baki.bakitheclicker.R.drawable.greencheckmini;
+import static com.m1info.baki.bakitheclicker.R.drawable.lockiconmini;
 
 public class LevelSelectActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_select);
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        int levelDone = prefs.getInt("LEVEL", 0);
+
+        ImageButton btn1 = findViewById(R.id.imageButton1);
+        ImageButton btn2 = findViewById(R.id.imageButton2);
+        ImageButton btn3 = findViewById(R.id.imageButton3);
+        ImageButton btn4 = findViewById(R.id.imageButton4);
+        ImageButton btn5 = findViewById(R.id.imageButton5);
+
+
+        List<ImageButton> listButt = new ArrayList<>();
+        listButt.add(btn1);
+        listButt.add(btn2);
+        listButt.add(btn3);
+        listButt.add(btn4);
+        listButt.add(btn5);
+        int ind=0;
+
+        for(ImageButton but:listButt){
+            Log.d("STATE","Level done : "+levelDone+" ind : "+ind);
+            if(levelDone>=ind) {
+                Log.d("STATE","HERE");
+                but.setEnabled(true);
+
+                if(levelDone==ind)
+                    but.setBackground(getResources().getDrawable(R.drawable.unlockiconmini));
+                else
+                    but.setBackground(getResources().getDrawable(R.drawable.greencheckmini));
+            }
+            else{
+                Log.d("STATE","THERE");
+                but.setEnabled(false);
+                but.setBackground(getResources().getDrawable(R.drawable.lockiconmini));
+            }
+            ind++;
+        }
 
 
         //test
@@ -52,17 +97,16 @@ public class LevelSelectActivity extends AppCompatActivity {
         });
 
 
-        ImageButton btn1 = findViewById(R.id.imageButton1);
+
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
-                intent.putExtra("level", 1);
-                startActivity(intent);
+                    Intent intent = new Intent(LevelSelectActivity.this, FightActivity.class);
+                    intent.putExtra("level", 1);
+                    startActivity(intent);
             }
         });
 
-        ImageButton btn2 = findViewById(R.id.imageButton2);
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -72,7 +116,6 @@ public class LevelSelectActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton btn3 = findViewById(R.id.imageButton3);
         btn3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -82,7 +125,6 @@ public class LevelSelectActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton btn4 = findViewById(R.id.imageButton4);
         btn4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -92,7 +134,6 @@ public class LevelSelectActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton btn5 = findViewById(R.id.imageButton5);
         btn5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -101,6 +142,9 @@ public class LevelSelectActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
 
 
 
