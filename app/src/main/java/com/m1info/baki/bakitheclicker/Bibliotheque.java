@@ -1,11 +1,17 @@
 package com.m1info.baki.bakitheclicker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Bibliotheque {
     public ArrayList<EquipementOffensif> EquipementsOffensifs;
     public ArrayList<EquipementDefensif> EquipementsDefensifs;
     public int longueur;
+
+    Map<String, Integer> persos;
+    List<String> persosNames;
 
     public Bibliotheque(){
         EquipementOffensif bandages = new EquipementOffensif("Bandages","Equipement permettant d'affliger des dégats un peu supérieures à ceux de base. ","Normale",5,R.drawable.bandages);
@@ -29,6 +35,24 @@ public class Bibliotheque {
         EquipementsDefensifs.add(gilet);
         EquipementsDefensifs.add(masque);
         EquipementsDefensifs.add(armure);
+
+        persos =  new HashMap<>();
+        persosNames = new ArrayList<>();
+
+        //persos.put("Dorian",R.drawable.p_dorian);
+        persos.put("Hanayama",R.drawable.p_hanayama);
+        persos.put("Katsumi",R.drawable.p_karateguy);
+        persos.put("Motobe",R.drawable.p_katanaguy);
+        persos.put("Gouki",R.drawable.p_oldguy);
+        persos.put("Oliva",R.drawable.p_oliva);
+
+        //persosNames.add("Dorian");
+        persosNames.add("Hanayama");
+        persosNames.add("Katsumi");
+        persosNames.add("Motobe");
+        persosNames.add("Gouki");
+        persosNames.add("Oliva");
+
 
         longueur=4;
     }
