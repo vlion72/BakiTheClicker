@@ -73,10 +73,10 @@ public class FightActivity extends AppCompatActivity {
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         attaque=prefs.getInt("ATTAQUE",5);
         this.vie=prefs.getInt("VIE",200);
-        equipement.add(0,prefs.getString("EQUIPEMENTO1","null"));
-        equipement.add(1,prefs.getString("EQUIPEMENTO2","null"));
-        equipement.add(2,prefs.getString("EQUIPEMENTD1","null"));
-        equipement.add(3,prefs.getString("EQUIPEMENTD2","null"));
+        equipement.add(prefs.getString("EQUIPEMENTO1","null"));
+        equipement.add(prefs.getString("EQUIPEMENTO2","null"));
+        equipement.add(prefs.getString("EQUIPEMENTD1","null"));
+        equipement.add(prefs.getString("EQUIPEMENTD2","null"));
 
         /* recuperation du level */
         nLevel=0;
@@ -213,7 +213,11 @@ public class FightActivity extends AppCompatActivity {
     public void dropEquipementOffensif(){
         double choix;
         choix = Math.random();
-        if(choix>0.7){
+        if(choix>0.9){
+            stuff=biblio.EquipementsOffensifs.get(3);
+        }else if(choix>0.7 && choix<=0.9){
+            stuff=biblio.EquipementsOffensifs.get(2);
+        }else if(choix>0.4 && choix<=0.7){
             stuff=biblio.EquipementsOffensifs.get(1);
         }else{
             stuff=biblio.EquipementsOffensifs.get(0);
@@ -232,7 +236,11 @@ public class FightActivity extends AppCompatActivity {
     public void dropEquipementDefensif(){
         double choix;
         choix = Math.random();
-        if(choix>0.7){
+        if(choix>0.9){
+            stuff=biblio.EquipementsDefensifs.get(3);
+        }else if(choix>0.7 && choix<=0.9){
+            stuff=biblio.EquipementsDefensifs.get(2);
+        }else if(choix>0.4 && choix<=0.7){
             stuff=biblio.EquipementsDefensifs.get(1);
         }else{
             stuff=biblio.EquipementsDefensifs.get(0);
@@ -394,7 +402,6 @@ public class FightActivity extends AppCompatActivity {
 
                                     }
                                 };
-                                taper();
                                 t.start();
 
                             }else{
@@ -500,9 +507,6 @@ public class FightActivity extends AppCompatActivity {
 
                     }
                 };
-                taper();
-
-
 
                 t.start();
 
@@ -523,7 +527,7 @@ public class FightActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
                     builder.setCancelable(true);
                     builder.setTitle(Baki.getNom());
-                    builder.setMessage("Total Attaque :"+Baki.getAttaque()+"\n"+"Total vie :"+Baki.getVie());
+                    builder.setMessage("Total Attaque :"+Baki.getAttaque()+"\n"+"Total vie :"+vie);
                     builder.setIcon(R.drawable.bakimain);
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override

@@ -31,6 +31,7 @@ public class LevelSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level_select);
 
         int levelDone;
+        int cmp;
         /*preferences pour la page LevelSelect*/
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         Intent i = getIntent();
@@ -38,9 +39,12 @@ public class LevelSelectActivity extends AppCompatActivity {
 
         /* evite de remettre levelDone a 0 quand l appli restart*/
         if(levelDone != 0){
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("LEVEL",levelDone);
-            editor.commit();
+            cmp = prefs.getInt("LEVEL",0);
+            if(levelDone>cmp) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("LEVEL", levelDone);
+                editor.commit();
+            }
         }
 
         levelDone = prefs.getInt("LEVEL", 0);

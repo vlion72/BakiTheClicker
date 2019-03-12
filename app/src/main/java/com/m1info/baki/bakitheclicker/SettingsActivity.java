@@ -28,7 +28,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Change le language
                 setLocale("ENG");
-                startActivity(new Intent(SettingsActivity.this, MainMenuActivity.class));
+                Intent i = new Intent(SettingsActivity.this, MainMenuActivity.class);
+                i.putExtra("LANGUE","ENG");
+                startActivity(i);
             }
         });
 
@@ -39,7 +41,9 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Change le language
                 setLocale("FR");
-                startActivity(new Intent(SettingsActivity.this, MainMenuActivity.class));
+                Intent i = new Intent(SettingsActivity.this, MainMenuActivity.class);
+                i.putExtra("LANGUE","FR");
+                startActivity(i);
 
             }
         });
