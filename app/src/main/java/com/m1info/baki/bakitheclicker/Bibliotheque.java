@@ -45,6 +45,7 @@ public class Bibliotheque {
         persos.put("Motobe",R.drawable.p_katanaguy);
         persos.put("Gouki",R.drawable.p_oldguy);
         persos.put("Oliva",R.drawable.p_oliva);
+        persos.put("Dorian",R.drawable.p_dorian);
 
         //persosNames.add("Dorian");
         persosNames.add("Hanayama");
@@ -52,6 +53,7 @@ public class Bibliotheque {
         persosNames.add("Motobe");
         persosNames.add("Gouki");
         persosNames.add("Oliva");
+        persosNames.add("Dorian");
 
 
         longueur=4;
