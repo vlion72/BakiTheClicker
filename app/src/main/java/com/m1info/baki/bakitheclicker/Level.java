@@ -2,6 +2,7 @@ package com.m1info.baki.bakitheclicker;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,6 +22,7 @@ public class Level {
         this.nbPersonnages = random;
         Map<String, Integer> persos = biblio.persos;
         List<String> persosNames = biblio.persosNames;
+        Collections.shuffle(persosNames);
 
         int attaque;
         int vie;

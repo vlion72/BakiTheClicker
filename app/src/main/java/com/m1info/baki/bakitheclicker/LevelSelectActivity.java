@@ -66,9 +66,9 @@ public class LevelSelectActivity extends AppCompatActivity {
         int ind=0;
 
         for(ImageButton but:LevelSelectActivity.listButt){
-            Log.d("STATE","Level done : "+levelDone+" ind : "+ind);
+            //Log.d("STATE","Level done : "+levelDone+" ind : "+ind);
             if(levelDone>=ind) {
-                Log.d("STATE","HERE");
+                //Log.d("STATE","HERE");
                 but.setEnabled(true);
 
                 if(levelDone==ind)
@@ -77,7 +77,7 @@ public class LevelSelectActivity extends AppCompatActivity {
                     but.setBackground(getResources().getDrawable(R.drawable.greencheckmini));
             }
             else{
-                Log.d("STATE","THERE");
+                //Log.d("STATE","THERE");
                 but.setEnabled(false);
                 but.setBackground(getResources().getDrawable(R.drawable.lockiconmini));
             }
@@ -107,12 +107,14 @@ public class LevelSelectActivity extends AppCompatActivity {
 
 
 
-        Button btnBck = (Button)findViewById(R.id.buttonBack);
+        Button btnBck = (Button)findViewById(R.id.buttonHome);
         btnBck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(LevelSelectActivity.this, MainMenuActivity.class));
             }
         });
+
+
 
 
 
