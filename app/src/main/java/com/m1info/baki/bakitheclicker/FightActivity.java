@@ -280,10 +280,13 @@ public class FightActivity extends AppCompatActivity {
                 Baki.bakipement.remove(3);
                 Baki.bakipement.add(3,prefs.getString("EQUIPEMENTD2","null"));
 
-                myDmg.setText("Dégats : \n"+Integer.toString(Baki.getAttaque()));
-                ennemiDmg.setText("Dégats ennemi :"+Integer.toString(ennemi.getAttaque()));
+                myDmg.setText(R.string.degats );
+                myDmg.append(Integer.toString(Baki.getAttaque()));
+                ennemiDmg.setText(R.string.dennemi);
+                ennemiDmg.append(Integer.toString(ennemi.getAttaque()));
                 ennemiName.setText(ennemi.getNom());
-                stage.setText("Niveau "+Integer.toString(nLevel));
+                stage.setText(R.string.niveau);
+                stage.append(Integer.toString(nLevel));
                 ennemiBtn.setBackgroundResource(ennemi.getImage());
                 ennemiBtn.setVisibility(View.VISIBLE);
 
@@ -307,9 +310,9 @@ public class FightActivity extends AppCompatActivity {
                     public void run() {
                         AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
                         builder.setCancelable(true);
-                        builder.setTitle("YOU LOOSE");
+                        builder.setTitle(R.string.defaite);
                         builder.setIcon(R.drawable.bakimain);
-                        builder.setPositiveButton("Menu Principal",
+                        builder.setPositiveButton(R.string.main,
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -318,7 +321,7 @@ public class FightActivity extends AppCompatActivity {
 
                                     }
                                 });
-                        builder.setNegativeButton("Recommencer", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton(R.string.recommencer, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -356,13 +359,31 @@ public class FightActivity extends AppCompatActivity {
                     builder.setCancelable(true);
                     builder.setTitle(stuff.getNom());
                     if(stuff.definirBonus()) {/* si c'est un equipement offensif*/
-                        builder.setMessage(stuff.getDescription() + "\n" +"Dégats :"+stuff.getBonus() + "\n" + "Raretée :"+stuff.getRareté());
+                        String mess=stuff.getDescription();
+                        mess+= "\n";
+                        mess+=getResources().getString(R.string.deg);
+                        mess+=Integer.toString(stuff.getBonus());
+                        mess+= "\n";
+                        mess+=getResources().getString(R.string.rare);
+                        mess+=stuff.getRareté();
+
+                        builder.setMessage(mess);
+
                     }
                     else{/*si c'est un équipement défensif*/
-                        builder.setMessage(stuff.getDescription() + "\n" +"Vie :"+stuff.getBonus() + "\n" + "Raretée :"+stuff.getRareté());
+                        String mess=stuff.getDescription();
+                        mess+= "\n";
+                        mess+=getResources().getString(R.string.vie);
+                        mess+=Integer.toString(stuff.getBonus());
+                        mess+= "\n";
+                        mess+=getResources().getString(R.string.rare);
+                        mess+=stuff.getRareté();
+
+                        builder.setMessage(mess);
+
                     }
                     builder.setIcon(stuff.getImage());
-                    builder.setPositiveButton("Confirmer",
+                    builder.setPositiveButton(R.string.conf,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -527,7 +548,13 @@ public class FightActivity extends AppCompatActivity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
                     builder.setCancelable(true);
                     builder.setTitle(Baki.getNom());
-                    builder.setMessage("Total Attaque :"+Baki.getAttaque()+"\n"+"Total vie :"+vie);
+
+                    String mess=getResources().getString(R.string.totdmg);
+                    mess+= Integer.toString(Baki.getAttaque());
+                    mess+="\n";
+                    mess+=getResources().getString(R.string.totvie);
+                    mess+= Integer.toString(vie);
+                    builder.setMessage(mess);
                     builder.setIcon(R.drawable.bakimain);
                     builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                         @Override
@@ -563,10 +590,10 @@ public class FightActivity extends AppCompatActivity {
                 /*pop up */
                 AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
                 builder.setCancelable(true);
-                builder.setTitle("YOU WIN");
-                builder.setMessage("Vous accedez desormais au niveau suivant ");
+                builder.setTitle(R.string.win);
+                builder.setMessage(R.string.access);
                 builder.setIcon(R.drawable.bakimain);
-                builder.setPositiveButton("Niveau suivant", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.suiv, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -575,7 +602,7 @@ public class FightActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                builder.setNegativeButton("Selection des niveaux", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(R.string.chooseStage, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

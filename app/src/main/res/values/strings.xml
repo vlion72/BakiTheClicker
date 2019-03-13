@@ -14,5 +14,20 @@
     <string name="buttHome">home</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name = "degats">Damages : \n</string>
+    <string name ="dennemi">Enemy Damage : </string>
+    <string name ="niveau" >Level </string>
+    <string name ="defaite" >YOU LOOSE</string>
+    <string name ="main" >Main Menu</string>
+    <string name="recommencer">Try Again</string>
+    <string name="conf">Confirm</string>
+    <string name="deg">Damages :</string>
+    <string name="rare">Rareness :</string>
+    <string name="vie">Life :</string>
+    <string name="totvie">Amount of life :</string>
+    <string name="totdmg">Amount of damage :</string>
+    <string name="win">YOU WIN</string>
+    <string name="access">You can now access to the next level</string>
+    <string name="suiv">Next Level</string>
 
 </resources>

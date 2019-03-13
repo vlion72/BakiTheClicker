@@ -38,7 +38,7 @@ public class MainMenuActivity extends AppCompatActivity {
             editor.commit();
         }
 
-        setLocale(prefs.getString("LANGUE","ENG"));
+        setLocale(prefs.getString("LANGUE","FR"));
 
 
         Button btn = (Button)findViewById(R.id.buttonSelectLvl);

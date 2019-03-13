@@ -13,5 +13,21 @@
     <string name="buttNext">suiv</string>
     <string name="buttHome">accueil</string>
 
+    <string name ="degats">Dégats : \n</string>
+    <string name ="dennemi">Dégats Ennemi : </string>
+    <string name ="niveau" >Niveau </string>
+    <string name ="defaite" >TU AS PERDU</string>
+    <string name ="main" >Menu Principal</string>
+    <string name="recommencer">Recommencer</string>
+    <string name="conf">Confirmer</string>
+    <string name="deg">Dégats :</string>
+    <string name="rare">Rareté :</string>
+    <string name="vie">Vie :</string>
+    <string name="totvie">Total de vie :</string>
+    <string name="totdmg">Total de dégats :</string>
+    <string name="win">TU AS GAGNE</string>
+    <string name="access">Vous pouvez maintenant accéder au niveau suivant</string>
+    <string name="suiv">Niveau suivant</string>
+
     <string name="title_activity_settings">Parametres</string>
 </resources>
