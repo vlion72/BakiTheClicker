@@ -578,42 +578,64 @@ public class FightActivity extends AppCompatActivity {
             public void run() {
                 SharedPreferences prefs = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("ATTAQUE",Baki.getAttaque());
-                editor.putInt("VIE",Baki.getVie());
-                editor.putInt("LEVEL",nLevel);
-                editor.putString("EQUIPEMENTO1",Baki.bakipement.get(0));
-                editor.putString("EQUIPEMENTO2",Baki.bakipement.get(1));
-                editor.putString("EQUIPEMENTD1",Baki.bakipement.get(2));
-                editor.putString("EQUIPEMENTD2",Baki.bakipement.get(3));
+                editor.putInt("ATTAQUE", Baki.getAttaque());
+                editor.putInt("VIE", Baki.getVie());
+                editor.putInt("LEVEL", nLevel);
+                editor.putString("EQUIPEMENTO1", Baki.bakipement.get(0));
+                editor.putString("EQUIPEMENTO2", Baki.bakipement.get(1));
+                editor.putString("EQUIPEMENTD1", Baki.bakipement.get(2));
+                editor.putString("EQUIPEMENTD2", Baki.bakipement.get(3));
                 editor.commit();
+                if (nLevel != 5) {
+                    /*pop up */
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.win);
+                    builder.setMessage(R.string.access);
+                    builder.setIcon(R.drawable.bakimain);
+                    builder.setPositiveButton(R.string.suiv, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Intent intent = new Intent(FightActivity.this, FightActivity.class);
+                            intent.putExtra("level", nLevel + 1);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton(R.string.chooseStage, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Intent i = new Intent(FightActivity.this, LevelSelectActivity.class);
+                            i.putExtra("leveldone", nLevel);
+                            startActivity(i);
+                        }
+                    });
 
-                /*pop up */
-                AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle(R.string.win);
-                builder.setMessage(R.string.access);
-                builder.setIcon(R.drawable.bakimain);
-                builder.setPositiveButton(R.string.suiv, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        Intent intent = new Intent(FightActivity.this, FightActivity.class);
-                        intent.putExtra("level", nLevel+1);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton(R.string.chooseStage, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        Intent i =new Intent(FightActivity.this, LevelSelectActivity.class);
-                        i.putExtra("leveldone",nLevel);
-                        startActivity(i);
-                    }
-                });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }else{
+                    /*pop up */
+                    AlertDialog.Builder builder = new AlertDialog.Builder(FightActivity.this);
+                    builder.setCancelable(true);
+                    builder.setTitle(R.string.win);
+                    builder.setMessage(R.string.access);
+                    builder.setIcon(R.drawable.bakimain);
+                    builder.setNegativeButton(R.string.chooseStage, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            Intent i = new Intent(FightActivity.this, LevelSelectActivity.class);
+                            i.putExtra("leveldone", nLevel);
+                            startActivity(i);
+                        }
+                    });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }
+
             }
         });
     }

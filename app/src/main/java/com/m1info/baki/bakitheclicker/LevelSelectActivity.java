@@ -33,7 +33,7 @@ public class LevelSelectActivity extends AppCompatActivity {
         int levelDone;
         int cmp;
         /*preferences pour la page LevelSelect*/
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         Intent i = getIntent();
         levelDone=i.getIntExtra("leveldone",0);
 
@@ -110,7 +110,9 @@ public class LevelSelectActivity extends AppCompatActivity {
         Button btnBck = (Button)findViewById(R.id.buttonHome);
         btnBck.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(LevelSelectActivity.this, MainMenuActivity.class));
+                Intent i =new Intent(LevelSelectActivity.this, MainMenuActivity.class);
+                i.putExtra("leveldone",prefs.getInt("LEVEL",0));
+                startActivity(i);
             }
         });
 
