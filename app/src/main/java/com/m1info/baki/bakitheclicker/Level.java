@@ -29,12 +29,25 @@ public class Level {
 
         this.listePNJ = new ArrayList<>();
 
-        for(int i=0; i<this.nbPersonnages; i++)
+        if(ind!=5){
+            for(int i=0; i<this.nbPersonnages; i++)
+            {
+                random = new Random().nextInt(10)+ind;
+                attaque = 5*(1+(random/10))*((ind%5)+1);
+                vie= 100*(1+(random/10))*((ind%5)+1);
+                PersoNonJoueur ennemi = new PersoNonJoueur(vie, attaque, persosNames.get(i),persos.get(persosNames.get(i)));
+
+                this.listePNJ.add(ennemi);
+            }
+        }
+        else
         {
+            this.nbPersonnages=1;
             random = new Random().nextInt(10)+ind;
-            attaque = 5*(1+(random/10))*((ind%5)+1);
-            vie= 100*(1+(random/10))*((ind%5)+1);
-            PersoNonJoueur ennemi = new PersoNonJoueur(vie, attaque, persosNames.get(i),persos.get(persosNames.get(i)));
+            random*=3;
+            attaque = 5*(1+(random/10))*((ind%5)+1)+20;
+            vie= 100*(1+(random/10))*((ind%5)+1)+800;
+            PersoNonJoueur ennemi = new PersoNonJoueur(vie, attaque, "Yujiro",R.drawable.yujiro);
 
             this.listePNJ.add(ennemi);
         }

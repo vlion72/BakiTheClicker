@@ -55,7 +55,7 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainMenuActivity.this, FightActivity.class);
-                intent.putExtra("level", levelDone+1);
+                intent.putExtra("level", 5);
                 startActivity(intent);
             }
         });
