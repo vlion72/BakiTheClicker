@@ -21,7 +21,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         String langue;
-        Intent i = getIntent();
+        Intent i =getIntent();
         langue = i.getStringExtra("LANGUE");
 
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
@@ -37,6 +37,7 @@ public class MainMenuActivity extends AppCompatActivity {
             editor.putString("LANGUE",langue);
             editor.commit();
         }
+
         setLocale(prefs.getString("LANGUE","ENG"));
 
 
