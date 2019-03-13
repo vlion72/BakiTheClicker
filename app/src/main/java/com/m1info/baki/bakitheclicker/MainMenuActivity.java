@@ -24,12 +24,17 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent i =getIntent();
         langue = i.getStringExtra("LANGUE");
 
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        ///////////////////// YA UNE COQUILLE ICI///////////////////////////////////////////////////////////////////////////////////////
-        final int levelDone = prefs.getInt("LEVEL", 0);
-        final int levelDone2 = i.getIntExtra("leveldone",0);
-        Log.d("/-/-/-/-/-/-/-/-/-/-/-/", "LEVELDONE : "+prefs.getInt("LEVEL", 0));
-        Log.d("/-/-/-/-/-/-/-/-/-/-/-/", "LEVELDONE : "+i.getIntExtra("leveldone",0));
+
+        final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        int lvldone=i.getIntExtra("leveldone",0);
+        final int leveldone=prefs.getInt("LEVEL",0);
+        if(lvldone!=leveldone) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("LEVEL", lvldone);
+            editor.commit();
+        }
+
+
 
         if(langue!=null){
 
@@ -55,8 +60,12 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainMenuActivity.this, FightActivity.class);
-                intent.putExtra("level", 5);
-                startActivity(intent);
+                if(prefs.getInt("LEVEL",0)!=5) {
+                    intent.putExtra("level", prefs.getInt("LEVEL", 0) + 1);
+                }else{
+                    intent.putExtra("level", prefs.getInt("LEVEL", 0));
+                }
+                    startActivity(intent);
             }
         });
 
