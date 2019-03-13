@@ -77,7 +77,6 @@ public class FightActivity extends AppCompatActivity {
         equipement.add(prefs.getString("EQUIPEMENTO2","null"));
         equipement.add(prefs.getString("EQUIPEMENTD1","null"));
         equipement.add(prefs.getString("EQUIPEMENTD2","null"));
-
         /* recuperation du level */
         nLevel=0;
         Intent intent = getIntent();
@@ -280,6 +279,8 @@ public class FightActivity extends AppCompatActivity {
                 Baki.bakipement.remove(3);
                 Baki.bakipement.add(3,prefs.getString("EQUIPEMENTD2","null"));
 
+                myLp.setMax(Baki.getVie());
+                ennemiLp.setMax(ennemi.getVie());
                 myDmg.setText(R.string.degats );
                 myDmg.append(Integer.toString(Baki.getAttaque()));
                 ennemiDmg.setText(R.string.dennemi);
